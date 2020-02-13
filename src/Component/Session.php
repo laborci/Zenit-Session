@@ -9,6 +9,9 @@ abstract class Session implements SharedService, SessionInterface{
 	private $namespace;
 
 	public function __construct() {
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
 		$this->fields = $this->getFields();
 		$this->namespace = $this->getNamespace();
 		if (!array_key_exists($this->namespace, $_SESSION)) $this->forget();
